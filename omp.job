@@ -1,0 +1,65 @@
+#!/bin/bash
+
+#SBATCH --job-name=qsort_hpc_exam
+#SBATCH --nodes=1
+#SBATCH --exclusive
+#SBATCH --time=0-02:00:00
+#SBATCH -A dssc
+#SBATCH -p EPYC
+#SBATCH --output=results_omp.out 
+#SBATCH --error=error_omp.err
+
+# Load the module for OpenMPI --------------------
+module load openMPI/4.1.5/gnu/12.2.1
+module load cmake/3.28.1
+
+# Create the datasets directory
+mkdir -p datasets
+
+# Compile ----------------------------------------
+srun ./build.sh omp
+
+echo ""
+echo "OpenMP implementation benchmark"
+echo "Partition: $SLURM_JOB_PARTITION"
+echo "Nodes: $SLURM_JOB_NUM_NODES"
+echo "Tasks: $SLURM_NTASKS"
+echo "Tasks per node: $SLURM_NTASKS_PER_NODE"
+echo "CPUs per task: $SLURM_CPUS_PER_TASK"
+echo "Hostname: $(hostname)"
+
+
+echo "🚀 Running the program"
+
+
+# Max threads and threads stride
+th_max=64
+th_stride=2
+
+# Number of elements
+# N=100000000                    # strong scaling
+# N=$((10000000 * $threads)) # weak scaling (change inside loops)
+
+# Parallel methods
+# for method in "task" "simple" "hyper" "psrs"; do
+for method in "task" "psrs"; do
+    for ((threads=2; threads<=$th_max; threads+=$th_stride)); do
+        export OMP_NUM_THREADS=$threads
+        N=$((1000000 * $threads)) # weak scaling
+        echo "🚀 Running $method with $threads threads and $N elements"
+        ./build/bin/omp_scaling $N $method
+        if [ $? -ne 0 ]; then
+            echo "⛔ ERROR: $method algorithm with $threads threads and $N elements"
+        fi
+    done
+done
+
+# Serial
+# echo "🚀 Running serial algorithm with $threads threads and $N elements"
+# ./build/bin/omp_scaling $N "serial"
+# if [ $? -ne 0 ]; then
+#     echo "⛔ ERROR: serial algorithm with $threads threads and $N elements"
+# fi
+
+echo " "
+echo "🏁 Program completed"

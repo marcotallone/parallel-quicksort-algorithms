@@ -1,0 +1,93 @@
+#!/bin/bash
+
+#SBATCH --job-name=qsort_hpc_exam
+#SBATCH --nodes=1
+#SBATCH --exclusive
+#SBATCH --time=0-02:00:00
+#SBATCH -A dssc
+#SBATCH -p EPYC
+#SBATCH --output=results_mpi.out 
+#SBATCH --error=error_mpi.err
+
+# Load the module for OpenMPI --------------------
+module load openMPI/4.1.5/gnu/12.2.1
+module load cmake/3.28.1
+
+# Create the datasets directory
+mkdir -p datasets
+
+# Compile ----------------------------------------
+srun ./build.sh mpi
+
+echo ""
+echo "MPI implementation benchmark"
+echo "Partition: $SLURM_JOB_PARTITION"
+echo "Nodes: $SLURM_JOB_NUM_NODES"
+echo "Tasks: $SLURM_NTASKS"
+echo "Tasks per node: $SLURM_NTASKS_PER_NODE"
+echo "CPUs per task: $SLURM_CPUS_PER_TASK"
+echo "Hostname: $(hostname)"
+
+export OMP_NUM_THREADS=2
+echo "Number of threads: $OMP_NUM_THREADS"
+echo ""
+
+
+echo "🚀 Running the program"
+
+
+# Max processes and process stride
+P_max=128
+P_stride=2
+
+# Number of elements
+N=1000000       # strong scaling
+# NPP=1000000     # weak scaling (change inside loops)
+
+# Serial
+for P in 1; do
+    method="serial"
+    echo "🚀 Running $method algorithm with $P processes and $(($N / 1000000)) million elements"
+    mpirun -np $P ./build/bin/mpi_scaling $N $method
+    if [ $? -ne 0 ]; then
+        echo "⛔ ERROR: $method algorithm with $P processes and $N elements"
+    fi
+done
+
+# Simple and Hyper require powers of 2
+for ((P=1; P<=$P_max; P*=2)); do
+    method="simple"
+    # N=$((NPP * $P)) # weak scaling
+
+    echo "🚀 Running $method algorithm with $P processes and $(($N / 1000000)) million elements"
+    mpirun -np $P ./build/bin/mpi_scaling $N $method
+    if [ $? -ne 0 ]; then
+        echo "⛔ ERROR: $method algorithm with $P processes and $N elements"
+    fi
+done
+for ((P=1; P<=$P_max; P*=2)); do
+    method="hyper"
+    # N=$((NPP * $P)) # weak scaling
+
+    echo "🚀 Running $method algorithm with $P processes and $(($N / 1000000)) million elements"
+    mpirun -np $P ./build/bin/mpi_scaling $N $method
+    if [ $? -ne 0 ]; then
+        echo "⛔ ERROR: $method algorithm with $P processes and $N elements"
+    fi
+done
+
+# PSRS can handle any number of processes
+# for ((P=1; P<=$P_max; P+=$P_stride)); do
+for ((P=1; P<=$P_max; P*=2)); do
+    method="psrs"
+    # N=$((NPP * $P)) # weak scaling
+
+    echo "🚀 Running $method algorithm with $P processes and $(($N / 1000000)) million elements"
+    mpirun -np $P ./build/bin/mpi_scaling $N $method
+    if [ $? -ne 0 ]; then
+        echo "⛔ ERROR: $method algorithm with $P processes and $N elements"
+    fi
+done
+
+echo " "
+echo "🏁 Program completed"

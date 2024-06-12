@@ -1,0 +1,68 @@
+#!/bin/bash
+
+#SBATCH --job-name=mbrot_hpc_exam
+#SBATCH --nodes=1
+##SBATCH --ntasks=1
+##SBATCH --cpus-per-task=128
+#SBATCH --exclusive
+#SBATCH --time=0-02:00:00
+#SBATCH -A dssc
+#SBATCH -p EPYC
+#SBATCH --output=mb.out 
+#SBATCH --error=error.err
+
+# Load the module for OpenMPI --------------------------------------------------
+module load openMPI/4.1.5/gnu/12.2.1
+module load cmake/3.28.1
+
+# Create the datasets directory
+mkdir -p datasets
+
+# Compile ----------------------------------------------------------------------
+srun ./build.sh omp
+
+echo ""
+echo "OpenMP implementation benchmark"
+echo "Partition: $SLURM_JOB_PARTITION"
+echo "Nodes: $SLURM_JOB_NUM_NODES"
+echo "Tasks: $SLURM_NTASKS"
+echo "Tasks per node: $SLURM_NTASKS_PER_NODE"
+echo "CPUs per task: $SLURM_CPUS_PER_TASK"
+echo "Hostname: $(hostname)"
+
+echo "🚀 Running the program"
+
+# Single run -------------------------------------------------------------------
+# export OMP_NUM_THREADS=128
+# ./build/bin/mandelbrot 10000 10000 -2.0 -1.2 0.7 1.2 65535
+
+# Scaling ----------------------------------------------------------------------
+
+# Max threads and threads stride
+th_min=4
+th_max=128
+th_stride=2
+
+# Parameters
+nx=10000
+ny=10000
+xmin=-2.0
+ymin=-1.2
+xmax=0.7
+ymax=1.2
+I_max=65535
+
+# Run the program with different number of threads
+for ((threads=$th_min; threads<=$th_max; threads+=$th_stride)); do
+    export OMP_NUM_THREADS=$threads
+    echo "🚀 Running with $threads threads, $(($nx*$ny)) pixels, $I_max max iter"
+    # ./build/bin/mandelbrot $nx $ny $xmin $ymin $xmax $ymax $I_max
+    ./build/bin/mandelbrot
+    if [ $? -ne 0 ]; then
+        echo "⛔ ERROR: with $threads threads"
+    fi
+done
+
+echo " "
+echo "🏁 Program completed"
+
