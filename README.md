@@ -32,7 +32,7 @@
     <a href="./parallel-quicksort-marco-tallone.pdf"><strong>Read the official report »</strong></a>
     <br />
     <br />
-    <a href="https://github.com/marcotallone/parallel-quicksort-algorithms/apps/mpi_example.c">View Demo</a>
+    <a href="./apps/mpi_example.c">View Demo</a>
     ·
     <a href="https://github.com/marcotallone/parallel-quicksort-algorithms/issues">Report Bug</a>
     ·
@@ -237,6 +237,7 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 
 - [MPI Forum](https://www.mpi-forum.org/)
 - [OpenMP](https://www.openmp.org/)
+- [CMake](https://cmake.org/)
 - [AREA Science Park](https://www.area.trieste.it/it/infrastrutture/orfeo)
 - [ORFEO Documentation](https://orfeo-doc.areasciencepark.it/)
 - [HPC UniTS](https://github.com/Foundations-of-HPC/High-Performance-Computing-2023)
