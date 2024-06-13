@@ -153,7 +153,7 @@ The main implemented sorting functions are the folowing:
 
 * `void MPI_PSRS(data_t **, int *, int, int, int, MPI_Datatype, compare_t)`: distributed memory version of the PSRS algorithm using MPI. This function must be called after `MPI_Initialize()` to enable communication between multiple processes. Takes in input the local array to be sorted, the size of the local array, the size of the global array, the rank of the process, the number of processes, the MPI communicator, the MPI specific datatype of the array elements and a comparison function to be used for sorting.
 
-The serial and shared memory versions sort the input array in place directly without the need of any additional operation. The MPI versions require a the master process to initially split the input array in multiple chunks and to actually send the chunks to the different processes. The chunks are then sorted in place by the single processes. These can be merged by the master process at the end of the function execution to check for sorting correctness.
+The serial and shared memory versions sort the input array in place directly without the need of any additional operation. The MPI versions require the master process to initially split the input array in multiple chunks and to actually send the chunks to the different processes. The chunks are then sorted in place by the single processes. These can be merged by the master process at the end of the function execution to check for sorting correctness.
 The `mpi_example.c` and `omp_example.c` script in the `apps/` folder show some [usage examples](./apps/).
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -165,7 +165,7 @@ If you want to use the implemented `epyc` module you can follow these steps. It 
 
 ### Prerequisites
 
-THe following are needed to compile and run the paralle versions of the implemented algorithms:
+The following are needed to compile and run the parallel versions of the implemented algorithms:
 
 * `CMake` build system
 * `OpenMP`
@@ -235,12 +235,12 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 
 ## References
 
-- [MPI Forum](https://www.mpi-forum.org/)
-- [OpenMP](https://www.openmp.org/)
-- [CMake](https://cmake.org/)
-- [AREA Science Park](https://www.area.trieste.it/it/infrastrutture/orfeo)
-- [ORFEO Documentation](https://orfeo-doc.areasciencepark.it/)
-- [HPC UniTS](https://github.com/Foundations-of-HPC/High-Performance-Computing-2023)
+* [MPI Forum](https://www.mpi-forum.org/)
+* [OpenMP](https://www.openmp.org/)
+* [CMake](https://cmake.org/)
+* [AREA Science Park](https://www.area.trieste.it/it/infrastrutture/orfeo)
+* [ORFEO Documentation](https://orfeo-doc.areasciencepark.it/)
+* [HPC UniTS](https://github.com/Foundations-of-HPC/High-Performance-Computing-2023)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -253,8 +253,6 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-[contributors-shield]: https://img.shields.io/github/contributors/marcotallone/parallel-quicksort-algorithms.svg?style=for-the-badge
-[contributors-url]: https://github.com/marcotallone/parallel-quicksort-algorithms/graphs/contributors
 [forks-shield]: https://img.shields.io/github/forks/marcotallone/parallel-quicksort-algorithms.svg?style=for-the-badge
 [forks-url]: https://github.com/marcotallone/parallel-quicksort-algorithms/network/members
 [stars-shield]: https://img.shields.io/github/stars/marcotallone/parallel-quicksort-algorithms.svg?style=for-the-badge
@@ -265,20 +263,3 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 [license-url]: https://github.com/marcotallone/parallel-quicksort-algorithms/blob/master/LICENSE
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://linkedin.com/in/marco-tallone-40312425b
-[product-screenshot]: images/screenshot.png
-[Next.js]: https://img.shields.io/badge/next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white
-[Next-url]: https://nextjs.org/
-[React.js]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
-[React-url]: https://reactjs.org/
-[Vue.js]: https://img.shields.io/badge/Vue.js-35495E?style=for-the-badge&logo=vuedotjs&logoColor=4FC08D
-[Vue-url]: https://vuejs.org/
-[Angular.io]: https://img.shields.io/badge/Angular-DD0031?style=for-the-badge&logo=angular&logoColor=white
-[Angular-url]: https://angular.io/
-[Svelte.dev]: https://img.shields.io/badge/Svelte-4A4A55?style=for-the-badge&logo=svelte&logoColor=FF3E00
-[Svelte-url]: https://svelte.dev/
-[Laravel.com]: https://img.shields.io/badge/Laravel-FF2D20?style=for-the-badge&logo=laravel&logoColor=white
-[Laravel-url]: https://laravel.com
-[Bootstrap.com]: https://img.shields.io/badge/Bootstrap-563D7C?style=for-the-badge&logo=bootstrap&logoColor=white
-[Bootstrap-url]: https://getbootstrap.com
-[JQuery.com]: https://img.shields.io/badge/jQuery-0769AD?style=for-the-badge&logo=jquery&logoColor=white
-[JQuery-url]: https://jquery.com 
