@@ -14,6 +14,7 @@
 [![Issues][issues-shield]][issues-url]
 [![MIT License][license-shield]][license-url]
 [![LinkedIn][linkedin-shield]][linkedin-url]
+[![Gmail][gmail-shield]][gmail-url]
 
 <!-- PROJECT LOGO -->
 <br />
@@ -42,7 +43,7 @@
 
 <!-- TABLE OF CONTENTS -->
 <details>
-  <summary>Table of Contents</summary>
+  <summary>📑 Table of Contents</summary>
   <ol>
     <li>
       <a href="#about-the-project">About The Project</a>
@@ -261,5 +262,11 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 [issues-url]: https://github.com/marcotallone/parallel-quicksort-algorithms/issues
 [license-shield]: https://img.shields.io/github/license/marcotallone/parallel-quicksort-algorithms.svg?style=for-the-badge
 [license-url]: https://github.com/marcotallone/parallel-quicksort-algorithms/blob/master/LICENSE
-[linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
+<!-- [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
+[linkedin-url]: https://linkedin.com/in/marco-tallone-40312425b -->
+[linkedin-shield]: https://img.shields.io/badge/-LinkedIn-blue?style=for-the-badge&logo=linkedin&logoColor=white&colorB=0077B5
 [linkedin-url]: https://linkedin.com/in/marco-tallone-40312425b
+<!-- [gmail-shield]: https://img.shields.io/badge/-Gmail-black.svg?style=for-the-badge&logo=gmail&colorB=555
+[gmail-url]: mailto:marcotallone85@gmail.com -->
+[gmail-shield]: https://img.shields.io/badge/-Gmail-red?style=for-the-badge&logo=gmail&logoColor=white&colorB=red
+[gmail-url]: mailto:marcotallone85@gmail.com
